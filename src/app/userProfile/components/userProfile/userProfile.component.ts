@@ -32,31 +32,29 @@ export class UserProfileComponent implements OnInit {
     currentUser: this.store.pipe(
       select(selectCurrentUser),
       filter((currentUser): currentUser is CurrentUserInterface =>
-        Boolean(currentUser)
-      )
+        Boolean(currentUser),
+      ),
     ),
     userProfile: this.store.pipe(
       select(selectUserProfileData),
       filter((userProfile): userProfile is UserProfileInterface =>
-        Boolean(userProfile)
-      )
+        Boolean(userProfile),
+      ),
     ),
   }).pipe(
     map(({currentUser, userProfile}) => {
       return currentUser.username === userProfile.username
-    })
+    }),
   )
-  data$ = combineLatest({
-    isLoading: this.store.select(selectIsLoading),
-    error: this.store.select(selectError),
-    userProfile: this.store.select(selectUserProfileData),
-    isCurrentUserProfile: this.isCurrentUserProfile$,
-  })
+
+  isLoading$ = this.store.select(selectIsLoading)
+  error$ = this.store.select(selectError)
+  userProfile$ = this.store.select(selectUserProfileData)
 
   constructor(
     private route: ActivatedRoute,
     private store: Store,
-    private router: Router
+    private router: Router,
   ) {}
 
   ngOnInit(): void {
