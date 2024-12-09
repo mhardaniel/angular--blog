@@ -1,6 +1,7 @@
 import {inject} from '@angular/core'
+import {Router} from '@angular/router'
 import {Actions, createEffect, ofType} from '@ngrx/effects'
-import {catchError, map, of, switchMap} from 'rxjs'
+import {catchError, map, of, switchMap, tap} from 'rxjs'
 import {ArticleInterface} from 'src/app/shared/types/article.interface'
 import {AddToFavoritesService} from '../services/addToFavorites.service'
 import {addToFavoritesActions} from './actions'
@@ -8,7 +9,7 @@ import {addToFavoritesActions} from './actions'
 export const addToFavoritesEffect = createEffect(
   (
     actions$ = inject(Actions),
-    addToFavoritesService = inject(AddToFavoritesService)
+    addToFavoritesService = inject(AddToFavoritesService),
   ) => {
     return actions$.pipe(
       ofType(addToFavoritesActions.addToFavorites),
@@ -22,10 +23,22 @@ export const addToFavoritesEffect = createEffect(
           }),
           catchError(() => {
             return of(addToFavoritesActions.addToFavoritesFailure())
-          })
+          }),
         )
-      })
+      }),
     )
   },
-  {functional: true}
+  {functional: true},
+)
+
+export const redirectIfNotLoggedInEffect = createEffect(
+  (actions$ = inject(Actions), router = inject(Router)) => {
+    return actions$.pipe(
+      ofType(addToFavoritesActions.addToFavoritesFailure),
+      tap(() => {
+        router.navigateByUrl('/login')
+      }),
+    )
+  },
+  {functional: true, dispatch: false},
 )

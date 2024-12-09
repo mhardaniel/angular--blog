@@ -7,7 +7,7 @@ export const authInterceptor: HttpInterceptorFn = (request, next) => {
   const token = persistanceService.get('accessToken')
   request = request.clone({
     setHeaders: {
-      Authorization: token ? `Token ${token}` : '',
+      Authorization: token ? `Bearer ${token}` : '',
     },
   })
   return next(request)

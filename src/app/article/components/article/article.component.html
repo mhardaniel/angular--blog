@@ -4,18 +4,20 @@
       <div class="container" *ngIf="data.article">
         <h1>{{ data.article.title }}</h1>
         <div class="article-meta">
-          <a [routerLink]="['/profiles', data.article.author.username]">
+          <a [routerLink]="['/profile', data.article.author.username]">
             <img [src]="data.article.author.image" />
           </a>
           <div class="info">
-            <a [routerLink]="['/profiles', data.article.author.username]">
+            <a [routerLink]="['/profile', data.article.author.username]">
               {{ data.article.author.username }}
             </a>
-            <span class="data">{{ data.article.createdAt }}</span>
+            <span class="date">{{
+              data.article.createdAt | date: 'MMMM d, y'
+            }}</span>
           </div>
           <span *ngIf="data.isAuthor">
             <a
-              [routerLink]="['/articles', data.article.slug, 'edit']"
+              [routerLink]="['/article', data.article.slug, 'edit']"
               class="btn btn-outline-secondary btn-sm"
             >
               <i class="ion-edit"></i>
@@ -41,6 +43,51 @@
             <p>{{ data.article.body }}</p>
           </div>
           <mc-tag-list [tags]="data.article.tagList"></mc-tag-list>
+        </div>
+      </div>
+
+      <hr />
+
+      <div class="article-actions" *ngIf="data.article">
+        <div class="article-meta">
+          <a [routerLink]="['/profile', data.article.author.username]"
+            ><img [src]="data.article.author.image"
+          /></a>
+          <div class="info">
+            <a
+              [routerLink]="['/profile', data.article.author.username]"
+              class="author"
+              >{{ data.article.author.username }}</a
+            >
+            <span class="date">{{
+              data.article.createdAt | date: 'MMMM d, y'
+            }}</span>
+          </div>
+
+          <!--<button class="btn btn-sm btn-outline-secondary">-->
+          <!--  <i class="ion-plus-round"></i>-->
+          <!--  &nbsp; Follow Eric Simons-->
+          <!--</button>-->
+          <!--&nbsp;-->
+          <!--<button class="btn btn-sm btn-outline-primary">-->
+          <!--  <i class="ion-heart"></i>-->
+          <!--  &nbsp; Favorite Article <span class="counter">(29)</span>-->
+          <!--</button>-->
+          <span *ngIf="data.isAuthor">
+            <a
+              [routerLink]="['/article', data.article.slug, 'edit']"
+              class="btn btn-outline-secondary btn-sm"
+            >
+              <i class="ion-edit"></i>
+              Edit Article
+            </a>
+            <button
+              class="btn btn-outline-danger btn-sm"
+              (click)="deleteArticle()"
+            >
+              Delete Article
+            </button>
+          </span>
         </div>
       </div>
     </div>

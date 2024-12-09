@@ -22,6 +22,7 @@ import {RegisterRequestInterface} from '../../types/registerRequest.interface'
 })
 export class RegisterComponent {
   form = this.fb.nonNullable.group({
+    name: ['', Validators.required],
     username: ['', Validators.required],
     email: ['', Validators.required],
     password: ['', Validators.required],
@@ -31,7 +32,10 @@ export class RegisterComponent {
     backendErrors: this.store.select(selectValidationErrors),
   })
 
-  constructor(private fb: FormBuilder, private store: Store) {}
+  constructor(
+    private fb: FormBuilder,
+    private store: Store,
+  ) {}
 
   onSubmit() {
     console.log('form', this.form.getRawValue())

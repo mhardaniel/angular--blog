@@ -2,7 +2,7 @@ import {CommonModule} from '@angular/common'
 import {Component, Input, OnChanges, OnInit, SimpleChanges} from '@angular/core'
 import {ActivatedRoute, Params, Router, RouterLink} from '@angular/router'
 import {Store} from '@ngrx/store'
-import {combineLatest, of} from 'rxjs'
+import {combineLatest} from 'rxjs'
 import {environment} from 'src/environments/environment'
 import {ErrorMessageComponent} from '../errorMessage/errorMessage.component'
 import {LoadingComponent} from '../loading/loading.component'
@@ -42,7 +42,7 @@ export class FeedComponent implements OnInit, OnChanges {
   constructor(
     private store: Store,
     private router: Router,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
   ) {}
 
   ngOnInit(): void {

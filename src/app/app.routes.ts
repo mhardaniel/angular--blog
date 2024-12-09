@@ -1,4 +1,5 @@
 import {Route} from '@angular/router'
+import {AuthGuard} from './shared/services/auth.guard'
 
 export const appRoutes: Route[] = [
   {
@@ -18,6 +19,7 @@ export const appRoutes: Route[] = [
   },
   {
     path: 'feed',
+    canActivate: [AuthGuard],
     loadChildren: () =>
       import('src/app/yourFeed/yourFeed.routes').then((m) => m.routes),
   },
@@ -27,19 +29,19 @@ export const appRoutes: Route[] = [
       import('src/app/tagFeed/tagFeed.routes').then((m) => m.routes),
   },
   {
-    path: 'articles/new',
+    path: 'article/new',
     loadChildren: () =>
       import('src/app/createArticle/createArticle.routes').then(
-        (m) => m.routes
+        (m) => m.routes,
       ),
   },
   {
-    path: 'articles/:slug',
+    path: 'article/:slug',
     loadChildren: () =>
       import('src/app/article/article.routes').then((m) => m.routes),
   },
   {
-    path: 'articles/:slug/edit',
+    path: 'article/:slug/edit',
     loadChildren: () =>
       import('src/app/editArticle/editArticle.routes').then((m) => m.routes),
   },
@@ -49,12 +51,12 @@ export const appRoutes: Route[] = [
       import('src/app/settings/settings.routes').then((m) => m.routes),
   },
   {
-    path: 'profiles/:slug',
+    path: 'profile/:slug',
     loadChildren: () =>
       import('src/app/userProfile/userProfile.routes').then((m) => m.routes),
   },
   {
-    path: 'profiles/:slug/favorites',
+    path: 'profile/:slug/favorites',
     loadChildren: () =>
       import('src/app/userProfile/userProfile.routes').then((m) => m.routes),
   },
